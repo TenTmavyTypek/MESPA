@@ -1,51 +1,61 @@
-# import pynput #<-- Unused, check line 47.
-
-
 import subprocess
 import keyboard
-from pynput.mouse import Button, Controller
-import time
 import random
+import time
+import pyautogui
 
-# mouse = pynput.mouse.Controller() #<-- Unused, check line 47.
-
+# Open Microsoft Edge
 subprocess.Popen('MicrosoftEdge.exe')
 
-for xy in range(10): #<-- Number of repeated searches.
-    randomString = ""
-    alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+# Number of repeated searches
+search_count = 10
+
+for _ in range(search_count):
+    random_query = ""
+    alphabet = 'abcdefghijklmnopqrstuvwxyz'
     second_pass = False
 
-    word_count = random.randint(2,4)
+    # Generate a random word count
+    word_count = random.randint(2, 4)
 
-    for i in range(1, word_count):
-        word_length = random.randint(3,7)
+    for _ in range(word_count):
+        word_length = random.randint(3, 7)
+
+        # Add space if it's not the first word
         if second_pass:
-            randomString += " "
-        for x in range(1, word_length):
-            char_position = random.randint(0,24)
-            randomChar = alphabet[char_position]
-            if second_pass != True:
-                randomString += randomChar.upper()
+            random_query += " "
+
+        for _ in range(word_length):
+            char_position = random.randint(0, 25)
+            random_char = alphabet[char_position]
+
+            # Make the first character uppercase
+            if not second_pass:
+                random_query += random_char.upper()
             else:
-                randomString += randomChar
+                random_query += random_char
+
             second_pass = True
 
-    randomString += "?"
+    random_query += "?"
 
-
-
+    # Wait before typing and sending the query
     time.sleep(3)
+    keyboard.write(random_query)
+    keyboard.press_and_release('enter')  # Submit text
 
-    keyboard.write(randomString)
-    keyboard.press_and_release('enter') #<-- Submit text.
-
+    # Wait for the search results to load
     time.sleep(2)
-    keyboard.press_and_release('alt+left') #<-- Back shortcut on keyboard.
 
-    #mouse.press(Button.x1)
-    #mouse.release(Button.x1) #<-- Back key on mouse, unused because of the need to point to the process window with mouse cursor. 
+    # Navigate back using the keyboard shortcut
+    keyboard.press_and_release('alt+left')
 
+    # Wait for a moment before refocusing on the address bar
     time.sleep(1)
+    keyboard.press_and_release('alt+d')  # Address bar toggle shortcut
 
-    keyboard.press_and_release('alt+d') #<-- Address bar toggle shortcut.
+# Display a message to the user
+keyboard.write("The searches are complete. You can now close the Microsoft Edge browser.")
+
+# Close Microsoft Edge using pyautogui
+pyautogui.hotkey('alt', 'f4')
