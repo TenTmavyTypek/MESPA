@@ -1,4 +1,10 @@
-# msrewards
+# Microsoft Edge Search Points Automator
+
+## About the Program
+
+The **Microsoft Edge Search Points Automator** is a Python script designed to streamline the process of earning reward points in Microsoft Edge. Microsoft Edge offers daily points for conducting searches, and this script automates the task of performing random searches, making it easier for users to accumulate their daily points.
+
+
 ### Usage
 
 1. Download the repository and navigate to the `dist` folder.
